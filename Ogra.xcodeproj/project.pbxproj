@@ -279,7 +279,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Craig Edwards";
 				TargetAttributes = {
 					5559D7351BFF893A00DBE126 = {
@@ -290,7 +290,7 @@
 					};
 					BFF261B21B66432500C5552D = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = "";
+						LastSwiftMigration = 1020;
 					};
 					BFF261D11B66435100C5552D = {
 						CreatedOnToolsVersion = 7.0;
@@ -302,6 +302,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = BFF261A91B66432500C5552D;
@@ -490,6 +491,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -548,6 +550,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -619,7 +622,7 @@
 				PRODUCT_NAME = Ogra;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -645,7 +648,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.blackdogfoundry.Ogra;
 				PRODUCT_NAME = Ogra;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
