@@ -1,6 +1,5 @@
 import XCTest
 import SwiftCheck
-import Mozart
 import Runes
 
 class ArraySpec: XCTestCase {
@@ -14,8 +13,7 @@ class ArraySpec: XCTestCase {
     }
 
     // fmap (f . g) = (fmap f) . (fmap g)
-    property("function composition law") <- forAll { (a: ArrayOf<Int>, fa: ArrowOf<Int, Int>, fb: ArrowOf<Int, Int>) in
-      let xs = a.getArray
+    property("function composition law") <- forAll { (xs: [Int], fa: ArrowOf<Int, Int>, fb: ArrowOf<Int, Int>) in
       let f = fa.getArrow
       let g = fb.getArrow
 
@@ -46,8 +44,8 @@ class ArraySpec: XCTestCase {
     }
 
     // f <*> pure x = pure ($ x) <*> f
-    property("interchange law") <- forAll { (x: Int, fa: ArrayOf<ArrowOf<Int, Int>>) in
-      let f = fa.getArray.map { $0.getArrow }
+    property("interchange law") <- forAll { (x: Int, fs: [ArrowOf<Int, Int>]) in
+      let f = fs.map { $0.getArrow }
 
       let lhs = f <*> pure(x)
       let rhs = pure({ $0(x) }) <*> f
@@ -55,14 +53,52 @@ class ArraySpec: XCTestCase {
       return lhs == rhs
     }
 
+    // u *> v = pure (const id) <*> u <*> v
+    property("interchange law - right sequence") <- forAll { (u: [Int], v: [Int]) in
+      let lhs: [Int] = u *> v
+      let rhs: [Int] = pure(curry(const)(id)) <*> u <*> v
+
+      return lhs == rhs
+    }
+
+    // u <* v = pure const <*> u <*> v
+    property("interchange law - left sequence") <- forAll { (u: [Int], v: [Int]) in
+      let lhs: [Int] = u <* v
+      let rhs: [Int] = pure(curry(const)) <*> u <*> v
+
+      return lhs == rhs
+    }
+
     // f <*> (g <*> x) = pure (.) <*> f <*> g <*> x
-    property("composition law") <- forAll { (a: ArrayOf<Int>, fa: ArrayOf<ArrowOf<Int, Int>>, fb: ArrayOf<ArrowOf<Int, Int>>) in
-      let x = a.getArray
-      let f = fa.getArray.map { $0.getArrow }
-      let g = fb.getArray.map { $0.getArrow }
+    property("composition law") <- forAll { (x: [Int], fs: [ArrowOf<Int, Int>], gs: [ArrowOf<Int, Int>]) in
+      let f = fs.map { $0.getArrow }
+      let g = gs.map { $0.getArrow }
 
       let lhs = f <*> (g <*> x)
       let rhs = pure(curry(•)) <*> f <*> g <*> x
+
+      return lhs == rhs
+    }
+  }
+
+  func testAlternative() {
+    property("alternative operator - left empty") <- forAll { (x: Int) in
+      let lhs: [Int] = empty() <|> pure(x)
+      let rhs: [Int] = pure(x)
+
+      return lhs == rhs
+    }
+
+    property("alternative operator - right empty") <- forAll { (x: Int) in
+      let lhs: [Int] = pure(x) <|> empty()
+      let rhs: [Int] = pure(x)
+
+      return lhs == rhs
+    }
+
+    property("alternative operator - neither empty") <- forAll { (x: Int, y: Int) in
+      let lhs: [Int] = pure(x) <|> pure(y)
+      let rhs: [Int] = pure(x) + pure(y)
 
       return lhs == rhs
     }
@@ -88,8 +124,7 @@ class ArraySpec: XCTestCase {
     }
 
     // (m >>= f) >>= g = m >>= (\x -> f x >>= g)
-    property("associativity law") <- forAll { (a: ArrayOf<Int>, fa: ArrowOf<Int, Int>, fb: ArrowOf<Int, Int>) in
-      let m = a.getArray
+    property("associativity law") <- forAll { (m: [Int], fa: ArrowOf<Int, Int>, fb: ArrowOf<Int, Int>) in
       let f: (Int) -> [Int] = pure • fa.getArrow
       let g: (Int) -> [Int] = pure • fb.getArrow
 
