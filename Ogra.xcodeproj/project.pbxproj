@@ -290,7 +290,7 @@
 					};
 					BFF261B21B66432500C5552D = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = "";
 					};
 					BFF261D11B66435100C5552D = {
 						CreatedOnToolsVersion = 7.0;
@@ -619,8 +619,7 @@
 				PRODUCT_NAME = Ogra;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -646,8 +645,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.blackdogfoundry.Ogra;
 				PRODUCT_NAME = Ogra;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
